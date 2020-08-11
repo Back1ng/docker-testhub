@@ -1,0 +1,32 @@
+version: '3'
+services:
+  php:
+    image: php:7.4-apache
+    build: ./docker/apache2
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - mysql
+  memcached:
+    image: memcached:1.5-alpine
+    ports:
+      - "11211:11211"
+    restart: always
+  mysql:
+    image: mysql:5.7
+    build: ./docker/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: "testhub"
+    ports:
+      - "3306:3306"
+    restart: always
+  redis:
+    image: redis:5.0-alpine
+    ports:
+      - "6379:6379"
+    restart: always
