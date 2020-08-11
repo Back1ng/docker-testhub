@@ -10,6 +10,7 @@ services:
       - ./:/var/www/html
     depends_on:
       - mysql
+    restart: always
   memcached:
     image: memcached:1.5-alpine
     ports:
